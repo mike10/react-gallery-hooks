@@ -1,0 +1,8 @@
+.list-users{
+   
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2fr repeat(4, 1fr);
+    gap: 1em;
+    
+}
