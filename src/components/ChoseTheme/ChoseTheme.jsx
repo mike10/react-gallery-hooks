@@ -3,21 +3,18 @@ import "./ChoseTheme.css"
 import { ThemeContext } from "../context/context"
 
 
-export class ChoseTheme extends React.Component{
-    constructor(props){
-        super(props)
-        this.themeChange = this.themeChange.bind(this)
-    }
+export const ChoseTheme =()=>{
 
-    static contextType = ThemeContext;
+    //static contextType = ThemeContext
 
     themeChange(e){
-        this.context.toggleTheme()
+        //this.context.value()
+        //console.dir(this.context())
     }
 
-    render(){ 
-        return(
-            <label>Темная темя<input type="checkbox" onChange={this.themeChange}/></label> 
-        )
-    }
+    
+    return(
+        <label>Темная темя<input type="checkbox" onChange={themeChange}/></label> 
+    )
+    
 }

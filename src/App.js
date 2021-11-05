@@ -1,41 +1,30 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import { Gallery } from './components/Gallery/Gallery';
 import './App.css';
 import { ThemeContext } from "./components/context/context"
 
 
-class App extends React.Component {
+function App() {
 
-  constructor(props){
-    super(props)
-    
-    this.toggleTheme = this.toggleTheme.bind(this)
+  const [state, dispatch] = useReducer(reducer, {theme: "light"});
 
-    this.state = {
-      toggleTheme: this.toggleTheme,
-      theme: "light"
-    };
-  }
-  
-
-  toggleTheme() {
-    if(this.state.theme === "light"){
-      this.setState({theme: "dark"})
-    }else{
-      this.setState({theme: "light"})
+  function reducer(state) {
+    if (state.theme === "light") {
+      console.log(state.theme)
+      return {theme: "dark"};
+    } else {
+      console.log(state.theme)
+      return {theme: "light"}
     }
   }
-
-  render() {
-    return ( 
-      <ThemeContext.Provider value={this.state}>
-        <div className={"App " + this.state.theme}>
-          <Gallery />
-        </div>
-     </ThemeContext.Provider>
-    )
-  }
-
+  
+  return ( 
+    <ThemeContext.Provider value={dispatch}>
+      <div className={"App " + state.theme}>
+        <Gallery />
+      </div>
+    </ThemeContext.Provider>
+  )
 }
 
 export default App;
