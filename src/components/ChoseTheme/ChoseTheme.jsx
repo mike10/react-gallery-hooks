@@ -1,20 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./ChoseTheme.css"
 import { ThemeContext } from "../context/context"
 
 
 export const ChoseTheme =()=>{
 
-    //static contextType = ThemeContext
+    const theme = useContext(ThemeContext);
 
-    themeChange(e){
-        //this.context.value()
-        //console.dir(this.context())
+    const themeChange = () => {
+        theme()
     }
 
     
     return(
-        <label>Темная темя<input type="checkbox" onChange={themeChange}/></label> 
+        <label>Темная тема<input type="checkbox" onChange={themeChange}/></label> 
     )
     
 }

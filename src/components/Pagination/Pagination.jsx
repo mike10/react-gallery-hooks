@@ -20,6 +20,7 @@ export const Pagination = (props) =>{
     const nextPag = (e) => {
         let num = e.target.innerText
         props.selectNumPag(num)
+        //console.log(props)
     }
 
     

@@ -1,6 +1,8 @@
 header{
     padding: 1em;
+    text-align: left;
 }
-h1{
+.h1{
     font-size: 38px;
+    margin: 0.5em;
 }

@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState, defaultData } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Gallery.css"
 import { ListUsers } from '../ListUsers/ListUsers'
 import { Footer } from '../Footer/Footer'
@@ -17,8 +17,6 @@ export function Gallery() {
   });
 
   function selectRange(num, data=state.data){
-    console.dir("selectRange")
-    console.dir(data)
     let massiv = [10, 20, 40, 50]
     let newNum = Math.ceil(data.length/massiv[num])
     
@@ -29,18 +27,19 @@ export function Gallery() {
       data: data,
       outData: data.slice(0, massiv[num])
     })
-    console.dir(state)
   }
 
   function selectNumPag(num){
-    //console.dir(state)
     let activePag = num-1
     let usersOnPage = state.usersOnPage
     let data = state.data
     let outData = data.slice(activePag*usersOnPage, activePag*usersOnPage+usersOnPage)
-
+    
     setState({
       activePag: activePag,
+      usersOnPage: state.usersOnPage,
+      maxPag: state.maxPag,
+      data: state.data,
       outData: outData
     })
   }
@@ -55,30 +54,23 @@ export function Gallery() {
      }).then(json => {
       let data = json.data
       selectRange(0, data)
-    });
-   });
+    })
+   }, []);
     
-  console.dir("if") 
-  console.dir(state) 
   if(state.outData){
-    //console.dir(state.outData)
-    let data = state.outData
-    let maxPag = state.maxPag
-    let activePag = state.activePag
-
-  return ( 
-    <section>
-      <header>
-        <h1>Пользователи</h1>
-      </header>
-      <ListUsers data={ data }/>
-      <Footer>
-        <Pagination maxPag={maxPag} activePag={activePag} selectNumPag={selectNumPag}/>
-        <Select selectRange={selectRange}/>
-        <ChoseTheme/>
-      </Footer>        
-    </section>
-  )
+    return ( 
+      <section>
+        <header>
+          <h1 class="h1">Пользователи</h1>
+        </header>
+        <ListUsers data={ state.outData }/>
+        <Footer>
+          <Pagination maxPag={state.maxPag} activePag={state.activePag} selectNumPag={selectNumPag}/>
+          <Select selectRange={selectRange}/>
+          <ChoseTheme/>
+        </Footer>        
+      </section>
+    )
   }
   return(
     <section>

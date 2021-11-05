@@ -1,10 +1,10 @@
 import React from "react";
 import "./Select.css"
 
-export const Select = () => {
+export const Select = (props) => {
    
     const selectRange = (e) =>{
-        this.props.selectRange(e.target.options.selectedIndex)
+        props.selectRange(e.target.options.selectedIndex)
     }
     
     return(

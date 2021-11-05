@@ -14,9 +14,8 @@ body{
 .App{
   background-color: #e7e8e6;
   display: inline-block;
-  max-width: 80%;
-  margin: auto;
   padding: 2em;
+  padding-top: 0;
 }
 
 .dark{

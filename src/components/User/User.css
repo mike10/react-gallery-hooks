@@ -5,13 +5,13 @@
     cursor: pointer;
     text-align: left;
     overflow: hidden;
-    text-overflow: ellipsis;
-
+    text-overflow:ellipsis;
 }
 
 .list-users__user > div{
-     display: inline-block;
-     vertical-align: middle;
+    display: inline-block;
+    vertical-align: middle;
+    
 }
 .list-users__user > div:nth-child(2){
     margin-left: 1em;
@@ -26,13 +26,15 @@
     text-overflow:ellipsis;
 }
 .list-users__id{
-   *position:absolute;
    overflow: hidden;
    text-overflow: ellipsis;
+   transition-property: opacity;
+   transition-duration: 3s;
  }
 .list-users__user:hover .list-users__id{
-    visibility: visible;
+    opacity: 1;
+    
 }
 .list-users__user:not(:hover) .list-users__id{
-    visibility:hidden;
+    opacity: 0;
 }
