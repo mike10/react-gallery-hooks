@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+
+
+
 import "./Gallery.css"
 import { ListUsers } from '../ListUsers/ListUsers'
 import { Footer } from '../Footer/Footer'
@@ -46,7 +49,8 @@ export function Gallery() {
 
   useEffect(() => {
     let url = new URL('https://dummyapi.io/data/v1/user?');
-    url.searchParams.set('limit', '50');
+    url.searchParams.set('limit', '50')
+    url.searchParams.set("page", "1")
     fetch(url, {headers: {
      "app-id": '61812ad9523754cd8285f9e7'
    }}).then(res => {
@@ -61,9 +65,9 @@ export function Gallery() {
     return ( 
       <section>
         <header>
-          <h1 class="h1">Пользователи</h1>
+          <h1 className="h1">Пользователи</h1>
         </header>
-        <ListUsers data={ state.outData }/>
+              <ListUsers data={ state.outData }/> 
         <Footer>
           <Pagination maxPag={state.maxPag} activePag={state.activePag} selectNumPag={selectNumPag}/>
           <Select selectRange={selectRange}/>

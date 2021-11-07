@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import "./User.css"
 
 
@@ -12,20 +13,20 @@ export const User = (props) => {
   let id = props.children
 
   return ( 
-      
-    <section className='list-users__user'>
-      
-      <div className='list-users__photo'>
-        <img src={picture} alt="" />
-      </div>
-      <div className='list-users__name'>
-        {`${title}. ${firstName} ${lastName}`}
-        <div className='list-users__id'>
-            {id}
+     <Link to={`/Profile/${id}`}>
+      <section className='list-users__user'>
+        <div className='list-users__photo'>
+          <img src={picture} alt="" />
         </div>
-      </div>
-      
-    </section>
+        <div className='list-users__name'>
+          {`${title}. ${firstName} ${lastName}`}
+          <div className='list-users__id'>
+              {id}
+          </div>
+        </div>
+      </section>
+     </Link> 
+    
   )
     
   }
