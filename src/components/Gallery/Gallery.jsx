@@ -19,6 +19,36 @@ export function Gallery() {
     outData: [] //массив с пользователями для экрана
   });
 
+  useEffect(() => {
+    let data1 = [], data2 = []
+    let url = new URL('https://dummyapi.io/data/v1/user?');
+    url.searchParams.set('limit', '50')
+    url.searchParams.set("page", "0")
+   
+    fetch(url, {headers: {
+     "app-id": '61812ad9523754cd8285f9e7'
+    }}).then(res => res.json())
+       .then(json => {
+        console.log(json)
+        let data = json.data
+        selectRange(0, data)
+    })
+    
+    /*url.searchParams.set("page", "1")
+    fetch(url, {headers: {
+      "app-id": '61812ad9523754cd8285f9e7'
+    }}).then(res => {
+        return res.json();
+    }).then(json => {
+        console.log(json)
+        data2 = json.data
+        let data = data1.concat(...data2)
+        selectRange(0, data)
+        console.log(data)
+     })*/
+    
+   }, []);
+
   function selectRange(num, data=state.data){
     let massiv = [10, 20, 40, 50]
     let newNum = Math.ceil(data.length/massiv[num])
@@ -47,19 +77,7 @@ export function Gallery() {
     })
   }
 
-  useEffect(() => {
-    let url = new URL('https://dummyapi.io/data/v1/user?');
-    url.searchParams.set('limit', '50')
-    url.searchParams.set("page", "1")
-    fetch(url, {headers: {
-     "app-id": '61812ad9523754cd8285f9e7'
-   }}).then(res => {
-       return res.json();
-     }).then(json => {
-      let data = json.data
-      selectRange(0, data)
-    })
-   }, []);
+  
     
   if(state.outData){
     return ( 

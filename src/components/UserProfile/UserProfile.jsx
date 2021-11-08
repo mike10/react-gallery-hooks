@@ -25,45 +25,33 @@ export const UserProfile = (props) => {
         })
        }, []);
     
-    console.dir(props)
+    const createTree = (tree) => {
+        let value = []
+        for(let el in tree){
+            console.log("el = " + el)
+            if(el === "id"){
+                value.push(<div className="profile__row" key={el}><div><img src={tree['picture']} alt="" /></div><div><span>{tree["id"]}</span></div></div>)
+            } else if(el === "picture" || el === "firstName" || el === "lastName"){
+               //Пропускаем эти поля!     
+            }else if(el === "title"){
+                value.push(<div className="profile__row" key={el}><div><strong>{tree["firstName"]} {tree["lastName"]}</strong></div></div>)
+            }else if(typeof(tree[el]) === "object") {
+               value.push(<div className="profile__row" key={el}><div><strong>{el}</strong></div></div>)
+               value.push(createTree(tree[el]))
+            } 
+            else {
+                value.push(<div className="profile__row" key={el}><div><strong>{el}</strong></div><div><span>{tree[el]}</span></div></div>)     
+            }
+        }
+        return value
+    }
+
+
     if(data){
-        let d = data
-        console.dir(d)
         return(
             <div className="profile">
-                <div className="profile__row">
-                    <div> <img src={d.picture} alt="" /></div>
-                    <div><span>{d.id}</span></div>
-                </div>
-                <div className="profile__row">
-                    <div><strong>{`${d.title} ${d.firstName} ${d.lastName}`}</strong> </div>
-                    <div></div>
-                </div>
-                <div className="profile__row">
-                    <div><strong>gender</strong></div>
-                    <div><span>{d.gender}</span></div>
-                </div>
-                <div className="profile__row">
-                    <div><strong>email</strong></div>
-                    <div><span>{d.email}</span></div>
-                </div>
-                <div className="profile__row">
-                    <div><strong>dateOfBirth</strong></div>
-                    <div> <span>{d.dateOfBirth}</span></div>
-                </div>
-                <div className="profile__row">
-                    <div><strong>registerDate</strong></div>
-                    <div><span>{d.registerDate}</span></div>
-                </div>
-                <div className="profile__row">
-                    <div><strong>phone</strong></div>
-                    <div><span>{d.phone}</span></div>
-                </div>
-                <div className="profile__row">
-                    <div><strong>country</strong></div>
-                    <div><span>{d.location?.country}</span></div>
-                </div>
-                <input className="profile__input" type="button" value="🢀" onClick={(e) => {
+               { createTree(data) }
+               <input className="profile__input" type="button" value="🢀" onClick={(e) => {
                     e.stopPropagation();
                     props.history.goBack()}} />
             </div>
