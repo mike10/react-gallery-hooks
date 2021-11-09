@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
-
-
-
 import "./Gallery.css"
+
 import { ListUsers } from '../ListUsers/ListUsers'
 import { Footer } from '../Footer/Footer'
 import { Pagination } from '../Pagination/Pagination'
@@ -13,73 +11,65 @@ export function Gallery() {
   
   const [state, setState] = useState({
     activePag: 0, //Выбранное число пагинации
-    maxPag: 5, //Максимум пагинаций
     usersOnPage: 10, //число пользователей на странице
     data: [], //весь массив с пользователями
     outData: [] //массив с пользователями для экрана
   });
 
-  useEffect(() => {
-    let data1 = [], data2 = []
-    let url = new URL('https://dummyapi.io/data/v1/user?');
+  async function getData() {
+    let data = []
+    let answer1, json1, answer2, json2
+    let url = new URL('https://dummyapi.io/data/v1/user?page=0&limit=50');
     url.searchParams.set('limit', '50')
     url.searchParams.set("page", "0")
-   
-    fetch(url, {headers: {
-     "app-id": '61812ad9523754cd8285f9e7'
-    }}).then(res => res.json())
-       .then(json => {
-        console.log(json)
-        let data = json.data
-        selectRange(0, data)
-    })
+    try{
+      answer1 = await fetch("https://dummyapi.io/data/v1/user?page=0&limit=50", { headers: { "app-id": '61812ad9523754cd8285f9e7' } })
+      answer2 = await fetch("https://dummyapi.io/data/v1/user?page=1&limit=50", { headers: { "app-id": '61812ad9523754cd8285f9e7' } })
+      if (answer1.ok) { 
+        json1 = await answer1.json();
+        if (answer2.ok) { 
+          json2 = await answer2.json();
+          data = json1.data.concat(json2.data)
+          selectRange(5, data)
+        } 
+      } 
+      //console.log(data)
+    }catch(err) {
+      alert("Проблема с сетевым запросом "+err); // TypeError: failed to fetch
+    }
     
-    /*url.searchParams.set("page", "1")
-    fetch(url, {headers: {
-      "app-id": '61812ad9523754cd8285f9e7'
-    }}).then(res => {
-        return res.json();
-    }).then(json => {
-        console.log(json)
-        data2 = json.data
-        let data = data1.concat(...data2)
-        selectRange(0, data)
-        console.log(data)
-     })*/
-    
+  } 
+
+  useEffect(() => {
+    getData()
    }, []);
 
-  function selectRange(num, data=state.data){
-    let massiv = [10, 20, 40, 50]
-    let newNum = Math.ceil(data.length/massiv[num])
-    
+  function selectRange(newUsersOnPage, data=state.data){
+   
     setState({
       activePag: 0,
-      usersOnPage: massiv[num],
-      maxPag: newNum,
+      usersOnPage: newUsersOnPage,
       data: data,
-      outData: data.slice(0, massiv[num])
+      outData: data.slice(0, newUsersOnPage)
     })
   }
 
   function selectNumPag(num){
-    let activePag = num-1
+    let newActivePag = num-1
     let usersOnPage = state.usersOnPage
     let data = state.data
-    let outData = data.slice(activePag*usersOnPage, activePag*usersOnPage+usersOnPage)
+    let newOutData = data.slice(newActivePag*usersOnPage, newActivePag*usersOnPage+usersOnPage)
     
     setState({
-      activePag: activePag,
+      activePag: newActivePag,
       usersOnPage: state.usersOnPage,
-      maxPag: state.maxPag,
       data: state.data,
-      outData: outData
+      outData: newOutData
     })
   }
-
-  
     
   if(state.outData){
+    //console.dir(state.outData)
     return ( 
       <section>
         <header>
@@ -87,8 +77,8 @@ export function Gallery() {
         </header>
               <ListUsers data={ state.outData }/> 
         <Footer>
-          <Pagination maxPag={state.maxPag} activePag={state.activePag} selectNumPag={selectNumPag}/>
-          <Select selectRange={selectRange}/>
+          <Pagination usersOnPage={state.usersOnPage} dataLength={state.data.length} activePag={state.activePag} selectNumPag={selectNumPag}/>
+          <Select selectRange={selectRange} rangeUsersOnPage={[5, 10, 20, 40, 50]}/>
           <ChoseTheme/>
         </Footer>        
       </section>

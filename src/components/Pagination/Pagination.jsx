@@ -3,31 +3,66 @@ import "./Pagination.css"
 
 export const Pagination = (props) =>{
     
-    const makeDiv = (maxPag) => {
-        let div = []
+    const makePag = () => {
+        let usersOnPage = props.usersOnPage
+        let dataLength = props.dataLength
         let activePag = props.activePag
+        
+        let div = []
 
-        for(let i=0; i < maxPag; i++){
-            if(i === activePag){
-                div.push(<div className="pagination__el pagination__el_active" key={i} onClick={nextPag}>{i+1}</div>)
-                continue
+        let step = Math.ceil(dataLength/usersOnPage)
+        if(step > 10){
+            for(let i=0; i < step; i++){
+                if(i > 2 && i < activePag-1 && i != step-3){
+                    if(div[div.length-1] !== "..."){
+                        div.push("...")
+                    }
+                    continue
+                }
+                if(i > activePag+1 && i < step-3 && i != 2){
+                    if(div[div.length-1] !== "..."){
+                        div.push("...")
+                    }
+                    continue
+                }
+                div.push(i)
             }
-            div.push(<div className="pagination__el" key={i} onClick={nextPag}>{i+1}</div>)
+        }else{
+            div = Array.apply(null, {length: step}).map(Number.call, Number)
         }
+        
+        console.log(div)
         return div
     }
 
     const nextPag = (e) => {
         let num = e.target.innerText
+        
+        console.log(e.target.innerText)
         props.selectNumPag(num)
-        //console.log(props)
     }
-
     
-let maxPag = props.maxPag
-let div = makeDiv(maxPag)
 return(  
-    <div className="pagination" onClick={nextPag}> {div}</div>
+    <div className="pagination" >{ 
+        
+        makePag().map((value, index )=> {
+            
+
+            if(value == props.activePag){
+                return <div className="pagination__el pagination__el_active" key={index} onClick={nextPag}>{value+1}</div>
+            }
+
+            if(value == "..."){
+                return <div className="pagination__el" key={index}>{value}</div>
+            } 
+            
+            return <div className="pagination__el" key={index} onClick={nextPag}>{value+1}</div>
+            
+            
+
+        })
+        
+        }</div>
     )
     
 }

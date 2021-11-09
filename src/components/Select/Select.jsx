@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Select.css"
 
 export const Select = (props) => {
    
+    //const [option, setOpt] = useState(props.rangeUsersOnPage)
+
     const selectRange = (e) =>{
-        props.selectRange(e.target.options.selectedIndex)
+        let index = e.target.options.selectedIndex
+        let option = e.target.options
+        props.selectRange(option[index].value)
     }
     
     return(
+       
         <label>Количество отображаемых пользователей
             <select onChange={selectRange}>
-                <option value={10}>10</option>
-                <option value={20}>20</option>
-                <option value={40}>40</option>
-                <option value={50}>50</option> 
+                { props.rangeUsersOnPage.map(val => {
+                    return <option key={val} value={val}>{val}</option>
+                }) }
             </select>
         </label>
         
