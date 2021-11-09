@@ -45,21 +45,20 @@ export function Gallery() {
    }, []);
 
   function selectRange(newUsersOnPage, data=state.data){
-   
+    console.log("selectRange" + newUsersOnPage)
     setState({
       activePag: 0,
       usersOnPage: newUsersOnPage,
       data: data,
       outData: data.slice(0, newUsersOnPage)
     })
+    
   }
 
   function selectNumPag(num){
     let newActivePag = num-1
-    let usersOnPage = state.usersOnPage
-    let data = state.data
-    let newOutData = data.slice(newActivePag*usersOnPage, newActivePag*usersOnPage+usersOnPage)
-    
+    let usersOnPage = Number(state.usersOnPage)
+    let newOutData = state.data.slice(newActivePag*usersOnPage, newActivePag*usersOnPage+usersOnPage)
     setState({
       activePag: newActivePag,
       usersOnPage: state.usersOnPage,
@@ -69,7 +68,6 @@ export function Gallery() {
   }
     
   if(state.outData){
-    //console.dir(state.outData)
     return ( 
       <section>
         <header>

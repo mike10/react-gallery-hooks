@@ -3,8 +3,6 @@ import "./Select.css"
 
 export const Select = (props) => {
    
-    //const [option, setOpt] = useState(props.rangeUsersOnPage)
-
     const selectRange = (e) =>{
         let index = e.target.options.selectedIndex
         let option = e.target.options
@@ -12,7 +10,6 @@ export const Select = (props) => {
     }
     
     return(
-       
         <label>Количество отображаемых пользователей
             <select onChange={selectRange}>
                 { props.rangeUsersOnPage.map(val => {
@@ -20,7 +17,6 @@ export const Select = (props) => {
                 }) }
             </select>
         </label>
-        
     )
     
 }

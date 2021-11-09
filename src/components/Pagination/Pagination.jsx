@@ -21,48 +21,35 @@ export const Pagination = (props) =>{
                 }
                 if(i > activePag+1 && i < step-3 && i != 2){
                     if(div[div.length-1] !== "..."){
-                        div.push("...")
+                        div.push("...")n
                     }
                     continue
                 }
                 div.push(i)
             }
         }else{
-            div = Array.apply(null, {length: step}).map(Number.call, Number)
+            div = [...Array(step).keys()]
         }
-        
-        console.log(div)
         return div
     }
 
     const nextPag = (e) => {
         let num = e.target.innerText
-        
-        console.log(e.target.innerText)
         props.selectNumPag(num)
     }
     
 return(  
     <div className="pagination" >{ 
-        
         makePag().map((value, index )=> {
-            
-
             if(value == props.activePag){
                 return <div className="pagination__el pagination__el_active" key={index} onClick={nextPag}>{value+1}</div>
             }
-
             if(value == "..."){
                 return <div className="pagination__el" key={index}>{value}</div>
             } 
-            
             return <div className="pagination__el" key={index} onClick={nextPag}>{value+1}</div>
-            
-            
-
         })
-        
-        }</div>
+    }</div>
     )
     
 }
