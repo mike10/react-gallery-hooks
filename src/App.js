@@ -5,7 +5,7 @@ import { Gallery } from './components/Gallery/Gallery';
 import { ThemeContext } from "./components/context/context"
 import { UserProfile } from './components/UserProfile/UserProfile'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
+import { CreateUser } from './components/CreateUser/CreateUser'
 
 function App() {
 
@@ -27,6 +27,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Gallery}/>
+          <Route exact path="/user/create" component={CreateUser}/>
           <Route path="/Profile/:id" component={UserProfile}/>
         </Switch>
       </BrowserRouter>

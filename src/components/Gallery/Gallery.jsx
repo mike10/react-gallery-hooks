@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
+//import { MyMenu } from '../MyMenu/MyMenu';
 import "./Gallery.css"
+import 'antd/dist/antd.css'
 
 import { ListUsers } from '../ListUsers/ListUsers'
 import { Footer } from '../Footer/Footer'
 import { Pagination } from '../Pagination/Pagination'
 import { Select } from '../Select/Select'
 import { ChoseTheme } from '../ChoseTheme/ChoseTheme'
+import { MyMenu } from "../MyMenu/MyMenu"
 
 export function Gallery() {
   
@@ -30,7 +33,7 @@ export function Gallery() {
         if (answer2.ok) { 
           json2 = await answer2.json();
           data = json1.data.concat(json2.data)
-          selectRange(5, data)
+          selectRange(10, data)
         } 
       } 
       //console.log(data)
@@ -72,11 +75,13 @@ export function Gallery() {
       <section>
         <header>
           <h1 className="h1">Пользователи</h1>
+          
+          <MyMenu/>
         </header>
               <ListUsers data={ state.outData }/> 
         <Footer>
           <Pagination usersOnPage={state.usersOnPage} dataLength={state.data.length} activePag={state.activePag} selectNumPag={selectNumPag}/>
-          <Select selectRange={selectRange} rangeUsersOnPage={[5, 10, 20, 40, 50]}/>
+          <Select selectRange={selectRange} rangeUsersOnPage={[10, 20, 40, 50, 5]}/>
           <ChoseTheme/>
         </Footer>        
       </section>

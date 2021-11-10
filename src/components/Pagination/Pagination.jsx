@@ -21,7 +21,7 @@ export const Pagination = (props) =>{
                 }
                 if(i > activePag+1 && i < step-3 && i != 2){
                     if(div[div.length-1] !== "..."){
-                        div.push("...")n
+                        div.push("...")
                     }
                     continue
                 }

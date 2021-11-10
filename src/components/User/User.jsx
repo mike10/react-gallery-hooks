@@ -13,7 +13,7 @@ export const User = (props) => {
   let id = props.children
 
   return ( 
-     <Link to={`/Profile/${id}`}>
+    <Link to={`/Profile/${id}`}>
       <section className='list-users__user'>
         <div className='list-users__photo'>
           <img src={picture} alt="" />
@@ -25,7 +25,7 @@ export const User = (props) => {
           </div>
         </div>
       </section>
-     </Link> 
+    </Link> 
     
   )
     
